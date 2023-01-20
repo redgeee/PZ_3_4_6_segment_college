@@ -1,15 +1,23 @@
-﻿Console.WriteLine("---SHOW---");
+﻿List<LineSegment> lineSegments = new List<LineSegment>();
+for (int i = 0; i < 3; i++)
+{
+    lineSegments.Add(new LineSegment(new Point(5 * i, 3 + i), new Point(4 + 2 * i, 7 * i / 2)));
+}
+for (int i = 0; i < 3; i++)
+{
+    lineSegments.Add(new LineSegmentOffSet(new Point(2 * i, 7 + i), new Point(1 + 4 * i, 5 * i / 9)));
+}
+for (int i = 0; i < 3; i++)
+{
+    lineSegments.Add(new LineSegmentOffSetPolyline(new Point(2 * i, 7 + i), new Point(1 + 4 * i, 5 * i / 9), new Point(47 * i, 41 / (i + 1))));
+}
 
-LineSegment ln1 = new LineSegment(1, 2, 3, 4);
-LineSegment ln2 = new LineSegmentOffSet(9, 7, 5, 3);
-LineSegment ln3 = new LineSegmentOffSetPolyline(10, 6, 4, 5, 8, 3);
-
-Console.WriteLine("---Show_1---");
-ln1.Show();
-Console.WriteLine("---Show_2---");
-ln2.Show();
-Console.WriteLine("---Show_3---");
-ln3.Show();
+Console.WriteLine("---SHOW---");
+foreach (LineSegment lineSegment in lineSegments)
+{
+    lineSegment.Show();
+    Console.WriteLine("----------");
+}
 
 public class LineSegment
 {
