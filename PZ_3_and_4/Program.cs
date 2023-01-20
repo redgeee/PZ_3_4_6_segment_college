@@ -1,28 +1,15 @@
-﻿Console.WriteLine("---LineSegmentOffSet---");
+﻿Console.WriteLine("---SHOW---");
 
-Console.WriteLine("---Line1---");
-LineSegmentOffSet lineSegmentOffSet1 = 
-    new LineSegmentOffSet(5, 3, 1, 7);
-Console.WriteLine(lineSegmentOffSet1);
-Console.WriteLine("Lenght: " + lineSegmentOffSet1.GetLength());
+LineSegment ln1 = new LineSegment(1, 2, 3, 4);
+LineSegment ln2 = new LineSegmentOffSet(9, 7, 5, 3);
+LineSegment ln3 = new LineSegmentOffSetPolyline(10, 6, 4, 5, 8, 3);
 
-Console.WriteLine("---Line1.1---");
-lineSegmentOffSet1.Point1 = new Point(0, 0);
-Console.WriteLine(lineSegmentOffSet1);
-Console.WriteLine("Lenght: " + lineSegmentOffSet1.GetLength());
-
-
-Console.WriteLine("---Line2---");
-LineSegmentOffSet lineSegmentOffSet2 = 
-    new LineSegmentOffSet(new Point(7, 3.5), new Point(2, 8.43));
-Console.WriteLine(lineSegmentOffSet2);
-Console.WriteLine("Lenght: " + lineSegmentOffSet2.GetLength());
-
-Console.WriteLine("---Line2.1---");
-lineSegmentOffSet2.Point2 = new Point(1000, -1000);
-Console.WriteLine(lineSegmentOffSet2);
-Console.WriteLine("Lenght: " + lineSegmentOffSet2.GetLength());
-
+Console.WriteLine("---Show_1---");
+ln1.Show();
+Console.WriteLine("---Show_2---");
+ln2.Show();
+Console.WriteLine("---Show_3---");
+ln3.Show();
 
 public class LineSegment
 {
@@ -53,6 +40,13 @@ public class LineSegment
 
     public override string ToString() =>
         "point1: " + point1.ToString() + " point2: " + point2.ToString();
+
+    public virtual void Show()
+    {
+        Console.WriteLine(Point1);
+        Console.WriteLine(Point2);
+    }
+
 }
 
 public class LineSegmentOffSet : LineSegment
@@ -146,8 +140,56 @@ public class LineSegmentOffSet : LineSegment
         return "Point1: " + this.point1.ToString() + 
             " Point2: " + this.point2.ToString();
     }
+    public override void Show()
+    {
+        Console.WriteLine(Point1);
+        Console.WriteLine(Point2);
+        Console.WriteLine(GetLength());
+    }
 }
 
+public class LineSegmentOffSetPolyline : LineSegmentOffSet
+{
+    public LineSegmentOffSetPolyline(Point point1, Point point2, Point point3) 
+        : base(point1, point2)
+    {
+        this.point3 = point3;
+    }
+    public LineSegmentOffSetPolyline(double x1, double y1, double x2, double y2, 
+        double x3, double y3) : base(x1, y1, x2, y2)
+    {
+        this.point3 = new Point(x3, y3);
+    }
+
+    protected Point point3;
+    protected Point savedPoint3;
+
+    public Point Point3
+    {
+        get { return this.point3; }
+        set { this.point3 = value; }
+    }
+
+    protected override void SavePoints()
+    {
+        this.savedPoint1 = this.point1;
+        this.savedPoint2 = this.point2;
+        this.savedPoint3 = this.point3;
+    }
+
+    public override string ToString()
+    {
+        return "point1: " + this.point1.ToString() + " point2: " + this.point2.ToString() + "point3: " + this.point3.ToString();
+    }
+
+    public override void Show()
+    {
+        Console.WriteLine(Point1);
+        Console.WriteLine(Point2);
+        Console.WriteLine(Point3);
+        Console.WriteLine(GetLength());
+    }
+}
 
 public class Point
 {
